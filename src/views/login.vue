@@ -4,7 +4,7 @@
       <div class="ms-title">Rocket PT</div>
       <el-form :model="param" :rules="rules" ref="login" label-width="0px" class="ms-content">
         <el-form-item prop="username">
-          <el-input v-model="param.username" placeholder="username">
+          <el-input v-model="param.username" placeholder="username / email">
             <template #prepend>
               <el-button :icon="User"></el-button>
             </template>
@@ -24,11 +24,13 @@
         </el-form-item>
         <div class="login-btn">
           <el-button type="primary"
-                     size="small"
+                     round
                      @click="submitForm(login)">登录
           </el-button>
-          <el-button type="primary" @click="submitForm(login)">登录</el-button>
         </div>
+        <el-button round type="success" @click="submitForm(login)">注册</el-button>
+        <el-button round type="warning" @click="submitForm(login)">忘记密码</el-button>
+        <el-button round type="danger" @click="submitForm(login)">封禁记录</el-button>
         <p class="login-tips">Tips : 10 次连续登录失败将导致你的IP地址被禁用!</p>
       </el-form>
     </div>

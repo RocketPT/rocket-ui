@@ -17,16 +17,23 @@
             </div>
             <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
               <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
-              <el-table-column prop="category" label="类型" width="60"></el-table-column>
+              <el-table-column prop="category" label="类型" width="60">
+                <template #default="scope">
+                  <el-tag type="success">
+                    <!--TODO 翻译分类-->
+                    {{ scope.row.category }}
+                  </el-tag>
+                </template>
+              </el-table-column>
               <el-table-column prop="name" label="标题" width="720"></el-table-column>
-              <el-table-column prop="comments" label="评论数" width="72" sortable></el-table-column>
-              <el-table-column prop="comments" label="时间" width="72" sortable></el-table-column>
-              <el-table-column prop="comments" label="大小" width="72" sortable></el-table-column>
-              <el-table-column prop="comments" label="上传" width="72" sortable></el-table-column>
-              <el-table-column prop="comments" label="下载" width="72" sortable></el-table-column>
-              <el-table-column prop="comments" label="完成" width="72" sortable></el-table-column>
-              <el-table-column prop="comments" label="进度" width="72"></el-table-column>
-              <el-table-column prop="comments" label="发布者" width="72"></el-table-column>
+              <el-table-column prop="comments" label="评论" width="80" sortable></el-table-column>
+              <el-table-column prop="comments" label="时间" width="80" sortable></el-table-column>
+              <el-table-column prop="comments" label="大小" width="80" sortable></el-table-column>
+              <el-table-column prop="comments" label="上传" width="80" sortable></el-table-column>
+              <el-table-column prop="comments" label="下载" width="80" sortable></el-table-column>
+              <el-table-column prop="comments" label="完成" width="80" sortable></el-table-column>
+              <el-table-column prop="comments" label="进度" width="80"></el-table-column>
+              <el-table-column prop="comments" label="发布者" width="80"></el-table-column>
               <!--              <el-table-column prop="gender" label="性别">-->
               <!--                <template #default="{ row }">-->
               <!--                  <span>{{ row.gender === 'MALE' ? '男' : '女' }}</span>-->

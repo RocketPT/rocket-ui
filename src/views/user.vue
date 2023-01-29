@@ -76,6 +76,8 @@ import 'cropperjs/dist/cropper.css';
 import {useBasicStore} from "../store/basic";
 
 const form = reactive({
+  id: 0,
+  inviter: '',
   old: '',
   new: '',
   desc: '不可能！我的代码怎么可能会有bug！'
