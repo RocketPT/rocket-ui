@@ -1,7 +1,12 @@
 import request from '../utils/request';
 import {BASE_URI} from "./base";
 
-export function login(data: { username: string; password: string }) {
+export function login(data: {
+    username: string;
+    password: string;
+    code: string;
+    uuid: string;
+}) {
     return request({
         url: `${BASE_URI}/login`,
         method: 'post',

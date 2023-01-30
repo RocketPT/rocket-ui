@@ -19,7 +19,8 @@
           @keyup.enter.native="searchTorrent"
           :prefix-icon="Search"
           clearable
-      /></div>
+      />
+    </div>
 
     <div class="header-right">
       <div class="header-user-con">
@@ -34,6 +35,12 @@
           </el-tooltip>
           <span class="btn-bell-badge" v-if="message"></span>
         </div>
+        <!-- dark -->
+        <button  class="border-none w-full bg-transparent cursor-pointer"  @click="toggleDark()">
+          <i inline-flex i="dark:ep-moon ep-sunny" />
+
+          <span class="ml-2">{{ isDark ? 'Dark' : 'Light' }}</span>
+        </button>
         <!-- 用户头像 -->
         <el-avatar class="user-avator" :size="30" :src="avatar"/>
         <!-- 用户名下拉菜单 -->
@@ -46,9 +53,9 @@
 					</span>
           <template #dropdown>
             <el-dropdown-menu>
-<!--              <a href="https://github.com/lin-xin/vue-manage-system" target="_blank">
-                <el-dropdown-item>项目仓库</el-dropdown-item>
-              </a>-->
+              <!--              <a href="https://github.com/lin-xin/vue-manage-system" target="_blank">
+                              <el-dropdown-item>项目仓库</el-dropdown-item>
+                            </a>-->
               <el-dropdown-item command="user">个人中心</el-dropdown-item>
               <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
@@ -60,11 +67,12 @@
 </template>
 <script setup lang="ts">
 import {onMounted, ref} from 'vue';
-import {Search } from '@element-plus/icons-vue'
+import {Search} from '@element-plus/icons-vue'
 import {useSidebarStore} from '../store/sidebar';
 import {useRouter} from 'vue-router';
 import {logout} from "../api/login";
 import {useBasicStore} from "../store/basic";
+import {useDark, useToggle} from '@vueuse/core'
 
 const keyword = ref('')
 const userinfoStore = useBasicStore();
@@ -74,6 +82,11 @@ const avatar: string | null = userinfo.avatar;
 const message: number = 2;
 
 const sidebar = useSidebarStore();
+
+
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
+
 // 侧边栏折叠
 const collapseChage = () => {
   sidebar.handleCollapse();
@@ -197,6 +210,7 @@ const handleCommand = (command: string) => {
 .el-dropdown-menu__item {
   text-align: center;
 }
+
 .search-box {
   margin: 0 auto;
   width: 320px;

@@ -45,7 +45,7 @@
 赞助支持项目，帮助项目开发，获取徽章。赞助者将会展示在本页面。
 
 <center class="half">
-<img src="https://user-images.githubusercontent.com/15922823/215301088-147cad1d-af96-423d-8d14-d3440d6e3964.png" width="360"/><img src="https://user-images.githubusercontent.com/15922823/215301134-1021dc8e-fdd8-4eec-bae4-05ec4a529b42.png" width="360"/>
+<img src="https://user-images.githubusercontent.com/15922823/215301088-147cad1d-af96-423d-8d14-d3440d6e3964.png" width="240"/><img src="https://user-images.githubusercontent.com/15922823/215301134-1021dc8e-fdd8-4eec-bae4-05ec4a529b42.png" width="240"/>
 </center>
 
 

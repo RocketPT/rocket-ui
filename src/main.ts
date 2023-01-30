@@ -6,6 +6,7 @@ import router from './router';
 import 'element-plus/dist/index.css';
 import './assets/css/icon.css';
 import {useBasicStore} from "./store/basic";
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
 const app = createApp(App);
 app.use(createPinia());

@@ -22,6 +22,18 @@
             </template>
           </el-input>
         </el-form-item>
+        <el-form-item prop="code">
+          <el-row :gutter="20">
+            <el-col :span="14">
+              <el-input v-model="param.code" placeholder="验证码">
+              </el-input>
+            </el-col>
+            <el-col :span="10" class="login-captcha">
+              <img class="login-captcha-img" :src="captchaPath" @click="getCaptcha()" alt="">
+            </el-col>
+          </el-row>
+        </el-form-item>
+
         <div class="login-btn">
           <el-button type="primary"
                      round
@@ -46,15 +58,21 @@ import {ElMessage} from 'element-plus';
 import {Lock, User} from '@element-plus/icons-vue';
 import {login as reqLogin} from "../api/login";
 import {useBasicStore} from "../store/basic";
+import {BASE_URI} from "../api/base";
+import {getUUID} from "../utils/uuid";
 
 interface LoginInfo {
   username: string;
   password: string;
+  code: string;
+  uuid: string;
 }
 
 const router = useRouter();
 const param = reactive<LoginInfo>({
   username: '',
+  code: '',
+  uuid: '',
   password: ''
 });
 
@@ -70,6 +88,7 @@ const rules: FormRules = {
 };
 let basicStore = useBasicStore();
 const login = ref<FormInstance>();
+const captchaPath = ref('');
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.validate((valid: boolean) => {
@@ -79,6 +98,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
         localStorage.setItem('token', res.data.token);
         router.push('/');
         basicStore.setUserinfo(res.data);
+      }).catch(reason => {
+
+        getCaptcha()
       });
 
     } else {
@@ -90,6 +112,14 @@ const submitForm = (formEl: FormInstance | undefined) => {
 
 const tags = useTagsStore();
 tags.clearTags();
+
+// 获取验证码
+const getCaptcha = () => {
+  param.uuid = getUUID()
+  captchaPath.value = BASE_URI + `/code.jpg?uuid=${param.uuid}`
+}
+getCaptcha();
+
 </script>
 
 <style scoped>
@@ -114,10 +144,10 @@ tags.clearTags();
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 350px;
+  width: 480px;
   margin: -190px 0 0 -175px;
   border-radius: 5px;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.5);
   overflow: hidden;
 }
 
@@ -139,5 +169,14 @@ tags.clearTags();
   font-size: 12px;
   line-height: 30px;
   color: #fff;
+}
+
+.login-captcha {
+  overflow: hidden;
+}
+
+.login-captcha-img {
+  width: 100%;
+  cursor: pointer;
 }
 </style>
