@@ -1,9 +1,9 @@
 <template>
 	<v-header />
 	<v-sidebar />
-	<div class="content-box" :class="{ 'content-collapse': sidebar.collapse }">
+	<el-card class="content-box" :class="{ 'content-collapse': sidebar.collapse }">
 		<v-tags></v-tags>
-		<div class="content">
+		<el-card class="content">
 			<router-view v-slot="{ Component }">
 				<transition name="move" mode="out-in">
 					<keep-alive :include="tags.nameList">
@@ -11,8 +11,8 @@
 					</keep-alive>
 				</transition>
 			</router-view>
-		</div>
-	</div>
+		</el-card>
+	</el-card>
 </template>
 <script setup lang="ts">
 import { useSidebarStore } from '../store/sidebar';
