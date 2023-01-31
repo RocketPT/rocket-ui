@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <el-card class="container">
       <el-row>
         <el-col :xl="6" :lg="6" style="border-right: 1px solid #dcdfe6;">
           <div style="padding-right: 10px">
@@ -120,7 +120,7 @@
           </div>
         </el-col>
       </el-row>
-    </div>
+    </el-card>
 
     <!-- 新增组织架构树 -->
     <el-dialog title="新增" v-model="addOrgDialogVisible" width="30%">
