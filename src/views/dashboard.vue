@@ -275,7 +275,7 @@ const todoList = reactive([
 
 .user-info-cont div:first-child {
   font-size: 30px;
-  color: #222;
+  color: var(--el-text-color-primary);
 }
 
 .user-info-list {
