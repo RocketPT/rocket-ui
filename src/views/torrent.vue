@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <el-card class="container">
       <el-row>
         <el-col>
           <div style="padding-left: 10px">
@@ -93,7 +93,7 @@
           </div>
         </el-col>
       </el-row>
-    </div>
+    </el-card>
 
     <!-- 高级搜索弹出框 -->
     <el-dialog title="高级搜索" v-model="addVisible" width="30%">

@@ -3,22 +3,22 @@
     <!-- 折叠按钮 -->
     <div class="collapse-btn" @click="collapseChage">
       <el-icon v-if="sidebar.collapse">
-        <Expand/>
+        <Expand />
       </el-icon>
       <el-icon v-else>
-        <Fold/>
+        <Fold />
       </el-icon>
     </div>
     <div class="logo">Rocket PT</div>
 
     <div class="header-center">
       <el-input
-          v-model="keyword"
-          class="search-box"
-          placeholder="搜索..."
-          @keyup.enter.native="searchTorrent"
-          :prefix-icon="Search"
-          clearable
+        v-model="keyword"
+        class="search-box"
+        placeholder="搜索..."
+        @keyup.enter.native="searchTorrent"
+        :prefix-icon="Search"
+        clearable
       />
     </div>
 
@@ -27,37 +27,42 @@
         <!-- 消息中心 -->
         <div class="btn-bell" @click="router.push('/tabs')">
           <el-tooltip
-              effect="dark"
-              :content="message ? `有${message}条未读消息` : `消息中心`"
-              placement="bottom"
+            effect="dark"
+            :content="message ? `有${message}条未读消息` : `消息中心`"
+            placement="bottom"
           >
             <i class="el-icon-lx-notice"></i>
           </el-tooltip>
           <span class="btn-bell-badge" v-if="message"></span>
         </div>
         <!-- dark -->
-        <button  class="border-none w-full bg-transparent cursor-pointer"  @click="toggleDark()">
-          <i inline-flex i="dark:ep-moon ep-sunny" />
-
-          <span class="ml-2">{{ isDark ? 'Dark' : 'Light' }}</span>
-        </button>
+        <el-button link @click="toggleDark()">
+          <el-icon v-if="isDark" size="22px" color="#fff">
+            <Moon />
+          </el-icon>
+          <el-icon v-else size="22px" color="#fff">
+            <Sunny />
+          </el-icon>
+        </el-button>
         <!-- 用户头像 -->
-        <el-avatar class="user-avator" :size="30" :src="avatar"/>
+        <el-avatar class="user-avator" :size="30" :src="avatar" />
         <!-- 用户名下拉菜单 -->
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
-					<span class="el-dropdown-link">
-						{{ username }}
-						<el-icon class="el-icon--right">
-							<arrow-down/>
-						</el-icon>
-					</span>
+          <span class="el-dropdown-link">
+            {{ username }}
+            <el-icon class="el-icon--right">
+              <arrow-down />
+            </el-icon>
+          </span>
           <template #dropdown>
             <el-dropdown-menu>
               <!--              <a href="https://github.com/lin-xin/vue-manage-system" target="_blank">
                               <el-dropdown-item>项目仓库</el-dropdown-item>
                             </a>-->
               <el-dropdown-item command="user">个人中心</el-dropdown-item>
-              <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
+              <el-dropdown-item divided command="loginout"
+                >退出登录</el-dropdown-item
+              >
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -66,15 +71,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
-import {Search} from '@element-plus/icons-vue'
-import {useSidebarStore} from '../store/sidebar';
-import {useRouter} from 'vue-router';
-import {logout} from "../api/login";
-import {useBasicStore} from "../store/basic";
-import {useDark, useToggle} from '@vueuse/core'
+import { onMounted, ref } from "vue";
+import { Moon, Sunny } from "@element-plus/icons-vue";
+import { useSidebarStore } from "../store/sidebar";
+import { useRouter } from "vue-router";
+import { logout } from "../api/login";
+import { useBasicStore } from "../store/basic";
+import { useDark, useToggle } from "@vueuse/core";
 
-const keyword = ref('')
+const keyword = ref("");
 const userinfoStore = useBasicStore();
 const userinfo = userinfoStore.userinfo;
 const username: string | null = userinfo.fullName;
@@ -83,9 +88,8 @@ const message: number = 2;
 
 const sidebar = useSidebarStore();
 
-
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
 
 // 侧边栏折叠
 const collapseChage = () => {
@@ -94,7 +98,7 @@ const collapseChage = () => {
 
 // 侧边栏折叠
 const searchTorrent = () => {
-  console.log("搜索torrent：" + keyword.value)
+  console.log("搜索torrent：" + keyword.value);
 };
 
 onMounted(() => {
@@ -106,13 +110,14 @@ onMounted(() => {
 // 用户名下拉菜单选择事件
 const router = useRouter();
 const handleCommand = (command: string) => {
-  if (command == 'loginout') {
+  if (command == "loginout") {
     logout().then(() => {
-      localStorage.removeItem('token');
-      router.push('/login');
-    })
-  } else if (command == 'user') {
-    router.push('/user');
+      toggleDark(false);
+      localStorage.removeItem("token");
+      router.push("/login");
+    });
+  } else if (command == "user") {
+    router.push("/user");
   }
 };
 </script>
@@ -145,7 +150,6 @@ const handleCommand = (command: string) => {
 .header-center {
   float: left;
   line-height: 70px;
-
 }
 
 .header-right {
