@@ -1,7 +1,7 @@
 <template>
   <div class="login-wrap">
     <div class="ms-login">
-      <div class="ms-title">Rocket PT</div>
+      <div class="ms-title"><strong>Rocket PT</strong></div>
       <el-form
         :model="param"
         :rules="rules"
