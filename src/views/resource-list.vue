@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <el-card class="container">
       <el-table
           :data="tableData"
           style="width: 100%; margin-bottom: 20px"
@@ -42,7 +42,7 @@
           </template>
         </el-table-column>
       </el-table>
-    </div>
+    </el-card>
 
     <!-- 新增弹出框 -->
     <el-dialog title="新增" v-model="addVisible" width="35%">

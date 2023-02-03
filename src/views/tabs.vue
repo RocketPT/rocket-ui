@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<el-card class="container">
 		<el-tabs v-model="message">
 			<el-tab-pane :label="`未读消息(${state.unread.length})`" name="first">
 				<el-table :data="state.unread" :show-header="false" style="width: 100%">
@@ -60,7 +60,7 @@
 				</template>
 			</el-tab-pane>
 		</el-tabs>
-	</div>
+	</el-card>
 </template>
 
 <script setup lang="ts" name="tabs">
