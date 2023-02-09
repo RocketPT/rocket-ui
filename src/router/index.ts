@@ -43,51 +43,63 @@ const serverRoutes: RouteRecordRaw[] = [
 ];
 
 const routes: RouteRecordRaw[] = [
-    {
-        path: '/',
-        redirect: '/dashboard',
-    },
-    {
-        path: '/',
-        name: 'Home',
-        component: Home,
-        children: [
-            ...serverRoutes,
-            {
-                path: '/tabs',
-                name: 'tabs',
-                meta: {
-                    title: 'tab标签',
-                    permiss: '3',
-                },
-                component: () => import(/* webpackChunkName: "tabs" */ '../views/tabs.vue'),
-            },
-            {
-                path: '/user',
-                name: 'user',
-                meta: {
-                    title: '个人中心',
-                },
-                component: () => import(/* webpackChunkName: "user" */ '../views/user.vue'),
-            },
-        ],
-    },
-    {
-        path: '/login',
-        name: 'Login',
+  {
+    path: "/",
+    redirect: "/dashboard",
+  },
+  {
+    path: "/",
+    name: "Home",
+    component: Home,
+    children: [
+      ...serverRoutes,
+      {
+        path: "/tabs",
+        name: "tabs",
         meta: {
-            title: '登录',
+          title: "tab标签",
+          permiss: "3",
         },
-        component: () => import(/* webpackChunkName: "login" */ '../views/login.vue'),
-    },
-    {
-        path: '/403',
-        name: '403',
+        component: () =>
+          import(/* webpackChunkName: "tabs" */ "../views/tabs.vue"),
+      },
+      {
+        path: "/user",
+        name: "user",
         meta: {
-            title: '没有权限',
+          title: "个人中心",
         },
-        component: () => import(/* webpackChunkName: "403" */ '../views/403.vue'),
+        component: () =>
+          import(/* webpackChunkName: "user" */ "../views/user.vue"),
+      },
+    ],
+  },
+  {
+    path: "/login",
+    name: "Login",
+    meta: {
+      title: "登录",
     },
+    component: () =>
+      import(/* webpackChunkName: "login" */ "../views/login.vue"),
+  },
+  {
+    path: "/register",
+    name: "Register",
+    meta: {
+      title: "注册",
+    },
+    component: () =>
+      import(/* webpackChunkName: "register" */ "../views/register.vue"),
+  },
+  {
+    path: "/403",
+    name: "403",
+    meta: {
+      title: "没有权限",
+    },
+    component: () => import(/* webpackChunkName: "403" */ "../views/403.vue"),
+  },
 ];
 
 const router = createRouter({
@@ -99,7 +111,7 @@ router.beforeEach(async (to, from, next) => {
     document.title = `${to.meta.title} | Rocket PT`;
     const token = localStorage.getItem('token');
     const basicStore = useBasicStore();
-    if (!token && to.path !== '/login') {
+    if (!token && (to.path !== '/login' && to.path !== '/register')) {
         next('/login');
     } /*else if (to.meta.permiss && !permiss.key.includes(to.meta.permiss)) {
         // 如果没有权限，则进入403

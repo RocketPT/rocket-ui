@@ -2,6 +2,7 @@
   <div class="login-wrap">
     <div class="ms-login">
       <div class="ms-title"><strong>Rocket PT</strong></div>
+      <strong class="type-title">登录</strong>
       <el-form
         :model="param"
         :rules="rules"
@@ -56,7 +57,10 @@
         <div class="login-btn">
           <el-button type="primary" @click="submitForm(login)">登录 </el-button>
         </div>
-        <el-button link type="success" @click="submitForm(login)"
+        <el-button
+          link
+          type="success"
+          @click="() => router.replace('/register')"
           >注册</el-button
         >
         <el-divider direction="vertical" />
@@ -178,6 +182,12 @@ getCaptcha();
 
 .ms-content {
   padding: 30px;
+}
+
+.type-title {
+  display: block;
+  text-align: center;
+  margin: 15px 0 0;
 }
 
 .login-btn {
