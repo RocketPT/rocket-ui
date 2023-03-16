@@ -735,10 +735,10 @@ magic-string@^0.27.0:
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.4.13"
 
-md-editor-v3@^2.2.1:
-  version "2.7.2"
-  resolved "https://registry.npmjs.org/md-editor-v3/-/md-editor-v3-2.7.2.tgz#433883f21b1133775c2d4433e38bc4833bd8201e"
-  integrity sha512-CyLG7yZhMyKplXO/MYIccpL0AOcnys74cMpbBG77rmXWlANAmzLrznUU++g6MohTv3DCRNTz+5Uh/w9h9P2sSA==
+md-editor-v3@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.npmmirror.com/md-editor-v3/-/md-editor-v3-2.10.0.tgz#b44ec66c1ce7b1209f349787d769be7d8c59aa38"
+  integrity sha512-PQwgyo/40of/DJniXGjVrlQeqJvO/m1NIbKAdXRWDsKYhTEun0l0mjcKTled+y/gSIp6Gmw+M7cDTLvFswBxQQ==
 
 memoize-one@^6.0.0:
   version "6.0.0"
