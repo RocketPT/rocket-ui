@@ -52,7 +52,7 @@
 
 ## 前言
 
-该方案作为一套多功能的后台框架模板，适用于绝大部分的后台管理系统开发。基于 Vue3 + pinia + typescript，引用 Element Plus 组件库，方便开发。实现逻辑简单，适合外包项目，快速交付。
+基于 Vue3 + pinia + typescript，引用 Element Plus 组件库，方便开发。
 
 ## 功能
 
