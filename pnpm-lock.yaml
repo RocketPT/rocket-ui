@@ -53,8 +53,8 @@ devDependencies:
     specifier: ^4.9.5
     version: 4.9.5
   unplugin-auto-import:
-    specifier: ^0.16.5
-    version: 0.16.5
+    specifier: ^0.16.6
+    version: 0.16.6
   unplugin-vue-components:
     specifier: ^0.24.1
     version: 0.24.1(vue@3.3.4)
@@ -931,8 +931,8 @@ packages:
       - rollup
     dev: true
 
-  /unplugin-auto-import@0.16.5:
-    resolution: {integrity: sha512-0qiJgi+eUNmmPqs2VJctVdH6i7NDdOYzcSJTCSFgiY5YLp9GtO2T+O4Ja7oLZzdeIzMO5uy/2oAsmLsfSrBJlA==}
+  /unplugin-auto-import@0.16.6:
+    resolution: {integrity: sha512-M+YIITkx3C/Hg38hp8HmswP5mShUUyJOzpifv7RTlAbeFlO2Tyw0pwrogSSxnipHDPTtI8VHFBpkYkNKzYSuyA==}
     engines: {node: '>=14'}
     peerDependencies:
       '@nuxt/kit': ^3.2.2
@@ -945,6 +945,7 @@ packages:
     dependencies:
       '@antfu/utils': 0.7.5
       '@rollup/pluginutils': 5.0.2
+      fast-glob: 3.3.0
       local-pkg: 0.4.3
       magic-string: 0.30.1
       minimatch: 9.0.2
