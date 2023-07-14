@@ -12,8 +12,8 @@ dependencies:
     specifier: ^0.27.2
     version: registry.npmmirror.com/axios@0.27.2
   element-plus:
-    specifier: ^2.3.4
-    version: 2.3.7(vue@3.3.4)
+    specifier: ^2.3.8
+    version: 2.3.8(vue@3.3.4)
   md-editor-v3:
     specifier: ^2.2.1
     version: registry.npmmirror.com/md-editor-v3@2.7.2
@@ -424,8 +424,8 @@ packages:
       ms: 2.1.2
     dev: true
 
-  /element-plus@2.3.7(vue@3.3.4):
-    resolution: {integrity: sha512-h6TxclbaLUJxg/Bv5j/ZKsK+K5yadQliw5+R30HWyE69pXlqXTX24oYx+yw3pA4Dy+lqEDi5501FQ0CORk3OSA==}
+  /element-plus@2.3.8(vue@3.3.4):
+    resolution: {integrity: sha512-yHQR0/tG2LvPkpGUt7Te/hPmP2XW/BytBNUbx+EFO54VnGCOE3upmQcVffNp1PLgwg9sthYDXontUWpnpmLPJw==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:
