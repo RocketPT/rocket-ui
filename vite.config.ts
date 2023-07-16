@@ -19,9 +19,11 @@ export default defineConfig({
 	],
 	server: {
 		host: '0.0.0.0',
+		cors: true,
 		proxy: {
 			'/api': {
-				target: `http://localhost:9966`,
+				changeOrigin: true,
+				target: `http://rocketpt.plexpt.com/api`,
 			},
 		},
 	},
