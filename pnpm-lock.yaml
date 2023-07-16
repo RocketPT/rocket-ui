@@ -47,7 +47,7 @@ devDependencies:
     specifier: ^3.2.47
     version: 3.3.4
   sass:
-    specifier: ^1.58.0
+    specifier: ^1.63.6
     version: 1.63.6
   typescript:
     specifier: ^4.9.5
