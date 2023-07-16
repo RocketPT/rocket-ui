@@ -14,11 +14,10 @@
           <el-input
             v-model="param.username"
             clearable
+            :prefix-icon="User"
             placeholder="username / email"
           >
-            <template #prepend>
-              <el-button :icon="User"></el-button>
-            </template>
+
           </el-input>
         </el-form-item>
         <el-form-item prop="password">
@@ -26,11 +25,10 @@
             type="password"
             clearable
             placeholder="password"
+            :prefix-icon="Lock"
             v-model="param.password"
           >
-            <template #prepend>
-              <el-button :icon="Lock"></el-button>
-            </template>
+
           </el-input>
         </el-form-item>
         <el-form-item prop="code">

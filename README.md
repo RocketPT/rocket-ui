@@ -86,6 +86,10 @@ npm run build
 
 ## 组件使用说明与演示
 
+### 主题组件库
+
+https://element-plus.org/zh-CN/
+
 ### 图标库
 
 https://www.xicons.org/#/

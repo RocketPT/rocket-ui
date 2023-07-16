@@ -4,6 +4,7 @@ import VueSetupExtend from 'vite-plugin-vue-setup-extend';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import {ElementPlusResolver} from 'unplugin-vue-components/resolvers';
+import { fileURLToPath, URL } from "node:url";
 
 export default defineConfig({
 	base: './',
@@ -23,8 +24,13 @@ export default defineConfig({
 		proxy: {
 			'/api': {
 				changeOrigin: true,
-				target: `http://rocketpt.plexpt.com/api`,
+				target: `http://rocketpt.plexpt.com`,
 			},
+		},
+	},
+	resolve: {
+		alias: {
+			"@": fileURLToPath(new URL("./src", import.meta.url)),
 		},
 	},
 	optimizeDeps: {
