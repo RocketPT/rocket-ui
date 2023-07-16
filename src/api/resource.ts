@@ -3,7 +3,7 @@ import {BASE_URI} from "./base";
 
 export function getMenus() {
     return request({
-        url: `${BASE_URI}/resources/menu`,
+        url: `${BASE_URI}/resources/list`,
         method: 'get',
     });
 }
