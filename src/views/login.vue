@@ -37,6 +37,7 @@
               <el-input
                 v-model="param.code"
                 placeholder="验证码"
+                :prefix-icon="Connection"
                 style="width: 100%"
                 @keyup.enter="submitForm(login)"
               ></el-input>
@@ -83,7 +84,7 @@ import { useTagsStore } from "../store/tags";
 import { useRouter } from "vue-router";
 import type { FormInstance, FormRules } from "element-plus";
 import { ElMessage } from "element-plus";
-import { Lock, User } from "@element-plus/icons-vue";
+import { Lock, User , Connection} from "@element-plus/icons-vue";
 import { login as reqLogin } from "../api/login";
 import { useBasicStore } from "../store/basic";
 import { BASE_URI } from "../api/base";

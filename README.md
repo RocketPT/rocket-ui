@@ -98,6 +98,18 @@ https://www.xicons.org/#/
 
 ### 登录
 
+## 伪静态规则
+
+```nginx
+location / {
+try_files $uri $uri/ @router;
+index  index.html;
+}
+
+location @router{
+rewrite ^.*$ /index.html last;
+}
+```
 
 ### 首页
 
