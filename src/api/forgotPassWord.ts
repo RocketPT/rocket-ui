@@ -8,6 +8,12 @@ export interface ForgotPassWordParam {
   code: string;
   uuid: string;
 }
+export interface ResetPasswordParam{
+    checkCode: string;
+    newPassword: string;
+    code: string;
+    uuid: string;
+}
 
 export function forgotPassWord(data: ForgotPassWordParam) {
   return request({
@@ -15,4 +21,11 @@ export function forgotPassWord(data: ForgotPassWordParam) {
     method: "post",
     data,
   });
+}
+export function resetPassword(data: ResetPasswordParam) {
+    return request({
+        url: `${BASE_URI}/reset-password`,
+        method: "post",
+        data
+    })
 }
