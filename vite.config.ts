@@ -24,7 +24,7 @@ export default defineConfig({
 		proxy: {
 			'/api': {
 				changeOrigin: true,
-				target: `http://rocketpt.plexpt.com`,
+				target: `http://127.0.0.1:9966`,
 			},
 		},
 	},
