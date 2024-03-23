@@ -102,6 +102,15 @@ const routes: RouteRecordRaw[] = [
       import(/*  */ "../views/forgotPassword.vue"),
   },
   {
+    path: "/resetPassword",
+    name: "ResetPassword",
+    meta: {
+      title: "重置密码",
+    },
+    component: () => 
+    import("../views/resetPassword.vue")
+  },
+  {
     path: "/403",
     name: "403",
     meta: {
@@ -120,7 +129,7 @@ router.beforeEach(async (to, from, next) => {
     document.title = `${to.meta.title} | Rocket PT`;
     const token = localStorage.getItem('token');
     const basicStore = useBasicStore();
-    if (!token && (to.path !== '/login' && to.path !== '/register') && to.path !== '/forgotPassword') {
+    if (!token && (to.path !== '/login' && to.path !== '/register') && to.path !== '/forgotPassword' && to.path !== '/resetPassword') {
         next('/login');
     } /*else if (to.meta.permiss && !permiss.key.includes(to.meta.permiss)) {
         // 如果没有权限，则进入403

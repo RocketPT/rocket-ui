@@ -2,7 +2,7 @@
   <div class="login-wrap">
     <div class="ms-login">
       <div class="ms-title"><strong>Rocket PT</strong></div>
-      <strong class="type-title">忘记密码</strong>
+      <strong class="type-title">重置密码</strong>
       <el-form
         :model="param"
         :rules="rules"
@@ -10,13 +10,35 @@
         label-width="80px"
         class="ms-content"
       >
-        <el-form-item prop="email" label="邮箱">
+        <el-form-item prop="checkCode" label="checkcode">
           <el-input
-            type="email"
-            v-model="param.email"
+            type="checkCode"
+            v-model="param.checkCode"
             clearable
-            placeholder="请输入邮箱地址"
+            placeholder="请输入发给您的验证码"
           >
+          </el-input>
+        </el-form-item>
+        <el-form-item prop="newPassword" label="新密码">
+          <el-input
+            type="password"
+            clearable
+            placeholder="newPassword"
+            :prefix-icon="Lock"
+            v-model="param.newPassword"
+          >
+
+          </el-input>
+        </el-form-item>
+             <el-form-item prop="newPassword2" label="重复密码" >
+          <el-input
+            type="password"
+            clearable
+            placeholder="newPassword2"
+            :prefix-icon="Lock"
+            v-model="param.newPassword2"
+          >
+
           </el-input>
         </el-form-item>
         <el-form-item prop="code" label="验证码">
@@ -41,7 +63,7 @@
         </el-form-item>
 
         <div class="login-btn">
-          <el-button type="primary" @click="submitForm(login)">发送验证链接</el-button>
+          <el-button type="primary" @click="submitForm(login)">确认</el-button>
         </div>
         <p class="login-tips">
           Tips : 已有账号？
@@ -63,7 +85,7 @@ import { reactive, ref } from "vue";
 import { useTagsStore } from "../store/tags";
 import type { FormInstance, FormRules } from "element-plus";
 import { ElMessage } from "element-plus";
-import { ForgotPassWordParam, forgotPassWord } from "../api/forgotPassWord";
+import { ResetPasswordParam, resetPassword } from "../api/forgotPassWord";
 import { useBasicStore } from "../store/basic";
 import { BASE_URI } from "../api/base";
 import { getUUID } from "../utils/uuid";
@@ -75,28 +97,20 @@ const router = useRouter();
 const isInvitation = ref(!!route.query.invitationCode);
 
 const param = reactive({
-  email: "",
+  checkCode: "",
+  newPassword: "",
+  newPassword2: "",
   code: "",
   uuid: "",
 });
 
 const rules: FormRules = {
-  email: [
-    { required: true, message: "请输入邮箱", trigger: "blur" },
-    {
-      asyncValidator: (rule: any, value: string) => {
-        if (
-          value &&
-          !/^([a-zA-Z\d][\w-]{2,})@(\w{2,})\.([a-z]{2,})(\.[a-z]{2,})?$/.test(
-            value
-          )
-        ) {
-          return Promise.reject(Error("请输入正确的邮箱地址"));
-        } else return Promise.resolve();
-      },
-    },
+  checkCode: [
+    { required: true, message: "请输入邮箱验证码", trigger: "blur" },
   ],
-  code: [{ required: true, message: "请输入验证码", trigger: "blur" }],
+  newPassword: [{ required: true, message: "请输入密码", trigger: "blur" }],
+  newPassword2: [{ required: true,message: "请再次输入密码",trigger: "blur" }],
+  code: [{ required: true, message: "请输入图形验证码", trigger: "blur" }],
 };
 let basicStore = useBasicStore();
 const login = ref<FormInstance>();
@@ -105,10 +119,10 @@ const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.validate((valid: boolean) => {
     if (valid) {
-      forgotPassWord(param)
+      resetPassword(param)
         .then((res) => {
-          ElMessage.success("验证码发送成功！");
-          router.replace('/resetPassword')
+          ElMessage.success("密码重置成功！");
+          router.replace('/login')
         })
         .catch((reason) => {
           getCaptcha();
