@@ -90,6 +90,7 @@ import { useBasicStore } from "../store/basic";
 import { BASE_URI } from "../api/base";
 import { getUUID } from "../utils/uuid";
 import { useRoute, useRouter } from "vue-router";
+import { Lock, User , Connection} from "@element-plus/icons-vue";
 
 const route = useRoute();
 const router = useRouter();

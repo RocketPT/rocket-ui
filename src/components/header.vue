@@ -72,7 +72,7 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { Moon, Sunny } from "@element-plus/icons-vue";
+import { Moon, Search, Sunny } from "@element-plus/icons-vue";
 import { useSidebarStore } from "../store/sidebar";
 import { useRouter } from "vue-router";
 import { logout } from "../api/login";
