@@ -44,6 +44,7 @@ export interface RegisterParams {
    * 验证码
    */
   code: string;
+  emailCode: string;
   uuid: string;
   /**
    * 邀请码
