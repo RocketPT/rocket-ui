@@ -7,7 +7,7 @@ const service: AxiosInstance = axios.create({
 });
 
 service.interceptors.request.use(
-    (config: AxiosRequestConfig) => {
+    (config: any) => {
         const headerToken = localStorage.getItem('token');
         if (headerToken) {
             // @ts-ignore
@@ -23,7 +23,7 @@ service.interceptors.request.use(
 );
 
 service.interceptors.response.use(
-    (response: AxiosResponse) => {
+    (response: any) => {
         if (response.status === 200) {
             return response;
         } else {

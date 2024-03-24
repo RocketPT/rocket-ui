@@ -186,7 +186,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
       register(param)
         .then((res) => {
           ElMessage.success("注册成功，去登录");
-          basicStore.changeIsLoginPage();
+          // basicStore.changeIsLoginPage();
         })
         .catch((reason) => {
           getCaptcha();

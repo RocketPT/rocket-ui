@@ -115,7 +115,7 @@
               </template>
             </el-input>
             <div>
-              <AppIcon v-model="form.icon" :model-value="form.icon" :selected-icon="form.icon"
+              <AppIcon v-model="form.icon"  :selected-icon="form.icon"
                        @change="handleAppIconChange"/>
             </div>
           </el-form-item>
