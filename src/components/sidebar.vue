@@ -38,7 +38,7 @@
                   {{ threeItem.title }}
                 </el-menu-item>
               </el-sub-menu>
-              <el-menu-item v-else :index="subItem.index">
+              <el-menu-item v-else :index="subItem.index" :key="subItem.index">
                 <el-icon>
                   <component :is="subItem.icon"></component>
                 </el-icon>
@@ -77,7 +77,7 @@ interface MenuItem {
 const items = ref<MenuItem[]>([]);
 
 getMenus().then(res => {
-  items.value = getDataNode(res.data, 1);
+  items.value = getDataNode(res.data.data, 55);
 });
 
 const getDataNode: any = (menus: any[], parentId: number) => {
