@@ -61,7 +61,7 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="sendEmailCode">发送验证码</el-button>
+          <el-button type="primary" @click="sendCode">发送验证码</el-button>
         </el-col>
       </el-row>
       </el-form-item>
@@ -129,8 +129,8 @@
 import { reactive, ref } from "vue";
 import { useTagsStore } from "../store/tags";
 import type { FormInstance, FormRules } from "element-plus";
-import { ElMessage } from "element-plus";
-import { RegisterParams, register } from "../api/login";
+import { ElAlert, ElMessage } from "element-plus";
+import { RegisterParams, register,sendEmailCode } from "../api/login";
 import { useBasicStore } from "../store/basic";
 import { BASE_URI } from "../api/base";
 import { getUUID } from "../utils/uuid";
@@ -200,6 +200,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
       register(param)
         .then((res) => {
           ElMessage.success("注册成功，去登录");
+          router.replace('/login')
           // basicStore.changeIsLoginPage();
         })
         .catch((reason) => {
@@ -217,10 +218,27 @@ const getCaptcha = () => {
   param.uuid = getUUID();
   captchaPath.value = BASE_URI + `/code.jpg?uuid=${param.uuid}`;
 };
-const sendEmailCode=()=>{
-  
+
+const sendCode= (formEl: FormInstance | undefined) => {
+  if (!formEl) return;
+  // formEl.validate((valid: boolean) => {
+    if (param.email !== null && param.email !== '') {
+      sendEmailCode(param)
+        .then((res) => {
+          ElMessage.success("验证码发送成功");
+          // basicStore.changeIsLoginPage();
+        })
+        .catch((reason) => {
+          ElMessage.error("验证码发送失败："+reason);
+          getCaptcha();
+        });
+    } else {
+      ElMessage.warning("请先输入邮箱地址")
+      return;
+    }
+  // });
 };
-sendEmailCode();
+
 getCaptcha();
 </script>
 

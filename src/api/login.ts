@@ -64,9 +64,18 @@ export interface RegisterParams {
 }
 
 export function register(data: RegisterParams) {
+  //In this method,the emailCode is required.And the Image Code is not.
+  data.code = data.emailCode;
   return request({
     url: `${BASE_URI}/register`,
     method: "post",
     data,
   });
+}
+export function sendEmailCode(data: RegisterParams) {
+  return request({
+    url: `${BASE_URI}/register/send`,
+    method: "post",
+    data,
+  })
 }
