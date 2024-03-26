@@ -39,7 +39,14 @@ const serverRoutes: RouteRecordRaw[] = [
             title: '种子',
         },
         component: () => import(/* webpackChunkName: "dashboard" */ '../views/torrent.vue'),
-    },
+    },{
+        path: '/upload',
+        name: 'upload',
+        meta : {
+          title: '发布',
+        },
+        component: ()  => import('../views/upload-torrent.vue'),
+    }
 ];
 
 const routes: RouteRecordRaw[] = [
