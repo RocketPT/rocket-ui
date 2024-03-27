@@ -143,7 +143,12 @@ router.beforeEach(async (to, from, next) => {
         next('/403');
     }*/ else {
         if (token) {
+          try {
             await basicStore.fetchUserinfo();
+          } catch(error) {
+            localStorage.removeItem('token');
+            return;
+          }
         }
         next();
     }
