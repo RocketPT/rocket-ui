@@ -1,7 +1,13 @@
 <template>
   <div id="up-torrent">
     <el-card class="container">
-      <el-form ref="torrent" :model="torrent" label-width="auto" class="ms-content"> 
+      <el-form 
+      ref="torrentRef" 
+      :model="torrent" 
+      :rules="rule"
+      label-width="auto" 
+      class="ms-content" 
+      > 
           <ElFormItem label="种子文件">
             <ElUpload 
             ref="uploadRef"
@@ -15,11 +21,19 @@
             </ElUpload>
           </ElFormItem>
           <el-form-item label="简称">
-            <el-input v-model="torrent.name"  />
+            <el-input 
+            v-model="torrent.name"
+            clearable
+            />
           </el-form-item>
           <el-form-item label="标题" >
-            <el-input v-model="torrent.title" />
-            <el-text>(若不填将使用种子文件名。<b>要求规范填写</b>，如：<i>Max Steel 2016 1080p BluRay x264 DTS-HD MA 5.1 2Audio-CHD</i>  不允许出现中文)</el-text>
+            <el-input 
+            v-model="torrent.title" 
+            placeholder="种子标题"
+            />
+
+            <!-- TODO: 点击 规范 ，另开窗口跳转到规则页面 -->
+            <el-text>(若不填将使用种子文件名。<b>要求<a href="/rule" target="_blank">规范</a>填写</b>，如：<i>Max Steel 2016 1080p BluRay x264 DTS-HD MA 5.1 2Audio-CHD</i>  不允许出现中文)</el-text>
           </el-form-item>
           <el-form-item label="副标题" prop="time">
             <el-input v-model="torrent.subheading" placeholder="种子副标题" />
@@ -44,9 +58,9 @@
           </el-form-item>
           <el-form-item label="状态" prop="time">
            <el-checkbox-group v-model="torrent.status">
-               <el-checkbox label="候选中" disabled />
-               <el-checkbox label="已上传" disabled />
-               <el-checkbox label="已下架"  disabled />
+               <el-checkbox label='候选中' value="0" disabled />
+               <el-checkbox label="已上传" value="1" disabled />
+               <el-checkbox label="已下架"  value="2" disabled />
            </el-checkbox-group>
           </el-form-item>
           <el-form-item label="是否匿名" prop="time" >
@@ -68,8 +82,12 @@
 <script setup lang="ts" name="torrent">
 import {reactive, ref} from 'vue';
 import {ElFormItem, ElMessage, ElMessageBox, ElUpload, inputEmits,UploadInstance,UploadRawFile,UploadProps,genFileId} from 'element-plus';
+import type { FormInstance, FormRules } from "element-plus";
 import { addTorrent } from '../api/torrent';
+import { useBasicStore } from "../store/basic";
+import { BASE_URI } from "../api/base";
 
+let basicStore = useBasicStore();
 
 interface torrentAddParam {
   name: string,
@@ -78,12 +96,10 @@ interface torrentAddParam {
   cover: string
   description: string,
   category: number
-  status: 0 | 1 | 2,
+  status: [],
   anonymous: string,
   remark: string,
 }
-
-const uploadRef = ref<UploadInstance>()
 
 const torrent = reactive<torrentAddParam>({
   name: '',
@@ -92,10 +108,19 @@ const torrent = reactive<torrentAddParam>({
   cover: '',
   description: '',
   category: 0,
-  status: 0,
+  status: ['0'],
   anonymous: '',
   remark: '',
 });
+
+const uploadRef = ref<UploadInstance>()
+const  torrentRef= ref<FormInstance>();
+
+
+const rules = reactive<FormRules<torrent>>({
+  name: [ { required: true, message: 'Please input Activity name', trigger: 'blur' },]
+})
+
 const handleExceed: UploadProps['onExceed'] = (files) => {
   uploadRef.value!.clearFiles()
   const file = files[0] as UploadRawFile
