@@ -8,3 +8,11 @@ export const fetchList = (data: any) => {
         data: data
     });
 }
+
+export const addTorrent = (data:any) => {
+    return request({
+        url: `${BASE_URI}/torrent/add`,
+        method: 'post',
+        data: data
+    });
+}
