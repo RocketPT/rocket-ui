@@ -4,17 +4,20 @@
       <el-form 
       ref="torrentRef" 
       :model="torrent" 
-      :rules="rule"
+      :rules="rules"
       label-width="auto" 
       class="ms-content" 
       > 
           <ElFormItem label="种子文件">
             <ElUpload 
             ref="uploadRef"
-            action="#"
+            :action="actionUrl"
+            :data="uploadFileParam"
             :limit="1"
             :on-exceed="handleExceed"
             :auto-upload="false"
+            :on-success="uploadSuccess"
+            :on-error="uploadErr"
             accept=".torrent"
             >
               <el-button type="primary" class="ml-3">选择文件</el-button>
@@ -70,7 +73,7 @@
             <el-input v-model="torrent.remark" placeholder="备注" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="default" @click="submitUpload"></el-button>
+            <el-button type="primary" size="default" @click="submitUpload">上传</el-button>
             
           </el-form-item>
       </el-form>
@@ -83,12 +86,15 @@
 import {reactive, ref} from 'vue';
 import {ElFormItem, ElMessage, ElMessageBox, ElUpload, inputEmits,UploadInstance,UploadRawFile,UploadProps,genFileId} from 'element-plus';
 import type { FormInstance, FormRules } from "element-plus";
-import { addTorrent } from '../api/torrent';
+import { addTorrent,upTorrentFileUri,AddTorrentParam } from '../api/torrent';
 import { useBasicStore } from "../store/basic";
 import { BASE_URI } from "../api/base";
 
 let basicStore = useBasicStore();
+let actionUrl = upTorrentFileUri
 
+
+//接收表单参数
 interface torrentAddParam {
   name: string,
   title: string
@@ -96,20 +102,28 @@ interface torrentAddParam {
   cover: string
   description: string,
   category: number
-  status: [],
-  anonymous: string,
+  status: string[],
+  anonymous: number,
   remark: string,
 }
-
-const torrent = reactive<torrentAddParam>({
+const uploadFileParam = {
+  id: 0
+}
+const uploadSuccess =()=>{
+  ElMessage.success('上传成功！！！')
+}
+const uploadErr = ()=>{
+  ElMessage.error('种子文件上传失败！！！！')
+}
+const torrent = reactive<AddTorrentParam>({
   name: '',
   title: '',
   subheading: '',
   cover: '',
   description: '',
   category: 0,
-  status: ['0'],
-  anonymous: '',
+  status: ['1','2'],
+  anonymous: 2,
   remark: '',
 });
 
@@ -117,8 +131,9 @@ const uploadRef = ref<UploadInstance>()
 const  torrentRef= ref<FormInstance>();
 
 
-const rules = reactive<FormRules<torrent>>({
-  name: [ { required: true, message: 'Please input Activity name', trigger: 'blur' },]
+const rules = reactive<FormRules<torrentAddParam>>({
+  name: [ { required: true, message: 'Please input Activity name', trigger: 'blur' },],
+  title: [{required: true, message: '请输入标题'}]
 })
 
 const handleExceed: UploadProps['onExceed'] = (files) => {
@@ -130,10 +145,18 @@ const handleExceed: UploadProps['onExceed'] = (files) => {
 
 const submitUpload = ()=> {
   addTorrent(torrent)
-}
+  .then((res)=>{
+      uploadFileParam.id = res.data
+      uploadRef.value!.submit()
+    ElMessage.success('上传成功')
+  })
+  .catch((reason)=>{
+    ElMessage.error('上传失败'+reason)
+  })
+};
 
 const category = reactive({
-  arr: []
+  arr: [0]
 });
 
 category.arr = [0,1,2,3,4];
