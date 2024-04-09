@@ -112,8 +112,8 @@ const uploadFileParam = {
 const uploadSuccess =()=>{
   ElMessage.success('上传成功！！！')
 }
-const uploadErr = ()=>{
-  ElMessage.error('种子文件上传失败！！！！')
+const uploadErr = (err, file, fileList)=>{
+  ElMessage.error(JSON.parse(err.message).message)
 }
 const torrent = reactive<AddTorrentParam>({
   name: '',
@@ -148,7 +148,6 @@ const submitUpload = ()=> {
   .then((res)=>{
       uploadFileParam.id = res.data
       uploadRef.value!.submit()
-    ElMessage.success('上传成功')
   })
   .catch((reason)=>{
     ElMessage.error('上传失败'+reason)
