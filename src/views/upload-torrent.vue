@@ -2,9 +2,9 @@
   <div id="up-torrent">
     <el-card class="container">
       <el-form 
-      ref="torrentRef" 
       :model="torrent" 
       :rules="rules"
+      ref="torrentRef" 
       label-width="auto" 
       class="ms-content" 
       > 
@@ -23,13 +23,13 @@
               <el-button type="primary" class="ml-3">选择文件</el-button>
             </ElUpload>
           </ElFormItem>
-          <el-form-item label="简称">
+          <el-form-item label="简称" prop="name">
             <el-input 
             v-model="torrent.name"
             clearable
             />
           </el-form-item>
-          <el-form-item label="标题" >
+          <el-form-item label="标题" prop="title">
             <el-input 
             v-model="torrent.title" 
             placeholder="种子标题"
@@ -42,14 +42,14 @@
             <el-input v-model="torrent.subheading" placeholder="种子副标题" />
             <el-text>(副标题必须包含影片中文译名，其它信息自行把握。  如：<i>血战钢锯岭/钢锯岭/钢铁英雄(台) [简体字幕][第89届奥斯卡金像奖六项提名]</i> )</el-text>
           </el-form-item>
-          <el-form-item label="封面" prop="time">
+          <el-form-item label="封面" prop="cover">
             <el-input v-model="torrent.cover" placeholder="封面" />
             <el-text>(若不填将尝试获从豆瓣获取)</el-text>
           </el-form-item>
-          <el-form-item label="描述" prop="time">
+          <el-form-item label="描述" prop="description">
             <el-input v-model="torrent.description" :rows="5" type="textarea" placeholder="请输入" />
           </el-form-item>
-          <el-form-item label="类别" prop="time">
+          <el-form-item label="类别" prop="category">
             <el-select v-model="torrent.category" placeholder="请选择" clearable filterable>
               <el-option v-for="(item) in category.arr"
                 :label="item"
@@ -131,10 +131,17 @@ const uploadRef = ref<UploadInstance>()
 const  torrentRef= ref<FormInstance>();
 
 
-const rules = reactive<FormRules<torrentAddParam>>({
-  name: [ { required: true, message: 'Please input Activity name', trigger: 'blur' },],
-  title: [{required: true, message: '请输入标题'}]
-})
+const rules: FormRules = {
+  name: [
+    {
+      required: true,
+      message: "请输入种子简称",
+      trigger: "blur",
+    },
+  ],
+  title: [{ required: true, message: "请输入标题", trigger: "blur" }],
+  description: [{required: true, message: "请输入种子描述", trigger: "blur"}]
+};
 
 const handleExceed: UploadProps['onExceed'] = (files) => {
   uploadRef.value!.clearFiles()
@@ -148,6 +155,7 @@ const submitUpload = ()=> {
   .then((res)=>{
       uploadFileParam.id = res.data
       uploadRef.value!.submit()
+      ElMessage.success("种子添加成功！")
   })
   .catch((reason)=>{
     ElMessage.error('上传失败'+reason)
