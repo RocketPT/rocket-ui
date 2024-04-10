@@ -29,24 +29,6 @@
           >
           </el-input>
         </el-form-item>
-        <el-form-item prop="email" label="邮箱">
-          <el-input
-            type="email"
-            v-model="param.email"
-            clearable
-            placeholder="请输入邮箱地址"
-          >
-          </el-input>
-        </el-form-item>
-        <el-form-item prop="password" label="密码">
-          <el-input
-            type="password"
-            clearable
-            placeholder="请输入密码"
-            v-model="param.password"
-          >
-          </el-input>
-        </el-form-item>
         <el-form-item prop="code" label="验证码">
           <el-row :gutter="20">
             <el-col :span="14">
@@ -66,6 +48,34 @@
               />
             </el-col>
           </el-row>
+        </el-form-item>
+        <el-form-item prop="email" label="邮箱">
+        <el-row gutter="10">
+          <el-col :span="20">
+          <el-input
+            type="email"
+            v-model="param.email"
+            clearable
+            placeholder="请输入邮箱地址"
+          >
+          </el-input>
+        </el-col>
+        <el-col :span="4">
+          <el-button type="primary" @click="sendCode">发送验证码</el-button>
+        </el-col>
+      </el-row>
+      </el-form-item>
+        <el-form-item prop="emailCode" label="邮箱验证">
+          <el-input type="emailCode" clearable placeholder="请输入我们发给您的邮箱验证码" v-model="param.emailCode"></el-input>
+        </el-form-item>
+        <el-form-item prop="password" label="密码">
+          <el-input
+            type="password"
+            clearable
+            placeholder="请输入密码"
+            v-model="param.password"
+          >
+          </el-input>
         </el-form-item>
         <el-form-item
           v-if="param.type === 2"
@@ -119,12 +129,14 @@
 import { reactive, ref } from "vue";
 import { useTagsStore } from "../store/tags";
 import type { FormInstance, FormRules } from "element-plus";
-import { ElMessage } from "element-plus";
-import { RegisterParams, register } from "../api/login";
+import { ElAlert, ElMessage } from "element-plus";
+import { RegisterParams, register,sendEmailCode } from "../api/login";
 import { useBasicStore } from "../store/basic";
 import { BASE_URI } from "../api/base";
 import { getUUID } from "../utils/uuid";
 import { useRoute, useRouter } from "vue-router";
+import { Delete, Edit, Search, Share, Upload } from '@element-plus/icons-vue'
+import { tr } from "element-plus/es/locale";
 
 const route = useRoute();
 const router = useRouter();
@@ -139,6 +151,7 @@ const param = reactive<RegisterParams>({
   email: "",
   invitationCode: (route.query.invitationCode as string | undefined) || "",
   code: "",
+  emailCode: "",
   uuid: "",
   country: "",
   sex: 0,
@@ -171,6 +184,7 @@ const rules: FormRules = {
     },
   ],
   code: [{ required: true, message: "请输入验证码", trigger: "blur" }],
+  emailCode: [{required: true , message: "请输入邮箱验证码"}],
   invitationCode: [
     { required: true, message: "请输入邀请码", trigger: "blur" },
   ],
@@ -186,6 +200,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
       register(param)
         .then((res) => {
           ElMessage.success("注册成功，去登录");
+          router.replace('/login')
           // basicStore.changeIsLoginPage();
         })
         .catch((reason) => {
@@ -203,6 +218,27 @@ const getCaptcha = () => {
   param.uuid = getUUID();
   captchaPath.value = BASE_URI + `/code.jpg?uuid=${param.uuid}`;
 };
+
+const sendCode= (formEl: FormInstance | undefined) => {
+  if (!formEl) return;
+  // formEl.validate((valid: boolean) => {
+    if (param.email !== null && param.email !== '') {
+      sendEmailCode(param)
+        .then((res) => {
+          ElMessage.success("验证码发送成功");
+          // basicStore.changeIsLoginPage();
+        })
+        .catch((reason) => {
+          ElMessage.error("验证码发送失败："+reason);
+          getCaptcha();
+        });
+    } else {
+      ElMessage.warning("请先输入邮箱地址")
+      return;
+    }
+  // });
+};
+
 getCaptcha();
 </script>
 

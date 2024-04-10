@@ -39,7 +39,14 @@ const serverRoutes: RouteRecordRaw[] = [
             title: '种子',
         },
         component: () => import(/* webpackChunkName: "dashboard" */ '../views/torrent.vue'),
-    },
+    },{
+        path: '/upload',
+        name: 'upload',
+        meta : {
+          title: '发布',
+        },
+        component: ()  => import(/* webpackChunkName: "dashboard" */'../views/upload-torrent.vue'),
+    }
 ];
 
 const routes: RouteRecordRaw[] = [
@@ -136,7 +143,12 @@ router.beforeEach(async (to, from, next) => {
         next('/403');
     }*/ else {
         if (token) {
+          try {
             await basicStore.fetchUserinfo();
+          } catch(error) {
+            localStorage.removeItem('token');
+            return;
+          }
         }
         next();
     }
