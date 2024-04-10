@@ -30,7 +30,7 @@
 
 基于 Vue3 + pinia + Element Plus 的PT系统前端解决方案。
 
-[体验站点](https://pt.plexpt.com)
+[体验站点](https://rocket.plexpt.com/)
 
 [English document](./README_EN.md)
 
