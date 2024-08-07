@@ -1,52 +1,52 @@
-import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router';
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import Home from '../views/home.vue';
-import {useBasicStore} from "../store/basic";
-
+import { useBasicStore } from "../store/basic";
+import LikebocaiDefault from '../components/layouts/default.vue'
 const serverRoutes: RouteRecordRaw[] = [
-    {
-        path: '/dashboard',
-        name: 'dashboard',
-        meta: {
-            title: '系统首页',
-        },
-        component: () => import(/* webpackChunkName: "dashboard" */ '../views/dashboard.vue'),
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    meta: {
+      title: '系统首页',
     },
-    {
-        path: '/users',
-        name: 'users',
-        meta: {
-            title: '用户列表',
-        },
-        component: () => import(/* webpackChunkName: "dashboard" */ '../views/user-list.vue'),
-    }, {
-        path: '/roles',
-        name: 'roles',
-        meta: {
-            title: '角色管理',
-        },
-        component: () => import(/* webpackChunkName: "dashboard" */ '../views/role-list.vue'),
-    }, {
-        path: '/resources',
-        name: 'resources',
-        meta: {
-            title: '权限资源',
-        },
-        component: () => import(/* webpackChunkName: "dashboard" */ '../views/resource-list.vue'),
-    },{
-        path: '/torrent',
-        name: 'torrent',
-        meta: {
-            title: '种子',
-        },
-        component: () => import(/* webpackChunkName: "dashboard" */ '../views/torrent.vue'),
-    },{
-        path: '/upload',
-        name: 'upload',
-        meta : {
-          title: '发布',
-        },
-        component: ()  => import(/* webpackChunkName: "dashboard" */'../views/upload-torrent.vue'),
-    }
+    component: () => import(/* webpackChunkName: "dashboard" */ '../views/dashboard.vue'),
+  },
+  {
+    path: '/users',
+    name: 'users',
+    meta: {
+      title: '用户列表',
+    },
+    component: () => import(/* webpackChunkName: "dashboard" */ '../views/user-list.vue'),
+  }, {
+    path: '/roles',
+    name: 'roles',
+    meta: {
+      title: '角色管理',
+    },
+    component: () => import(/* webpackChunkName: "dashboard" */ '../views/role-list.vue'),
+  }, {
+    path: '/resources',
+    name: 'resources',
+    meta: {
+      title: '权限资源',
+    },
+    component: () => import(/* webpackChunkName: "dashboard" */ '../views/resource-list.vue'),
+  }, {
+    path: '/torrent',
+    name: 'torrent',
+    meta: {
+      title: '种子',
+    },
+    component: () => import(/* webpackChunkName: "dashboard" */ '../views/torrent.vue'),
+  }, {
+    path: '/upload',
+    name: 'upload',
+    meta: {
+      title: '发布',
+    },
+    component: () => import(/* webpackChunkName: "dashboard" */'../views/upload-torrent.vue'),
+  }
 ];
 
 const routes: RouteRecordRaw[] = [
@@ -114,8 +114,8 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: "重置密码",
     },
-    component: () => 
-    import("../views/resetPassword.vue")
+    component: () =>
+      import("../views/resetPassword.vue")
   },
   {
     path: "/403",
@@ -125,32 +125,60 @@ const routes: RouteRecordRaw[] = [
     },
     component: () => import(/* webpackChunkName: "403" */ "../views/403.vue"),
   },
+    // registerLikebocai
+    {
+      path: "/likebocai",
+      name: "likebocai",
+      meta: {
+        title: "likebocai | 框架",
+      },
+      component: LikebocaiDefault,
+      children: [
+        {
+          path: "torrentList",
+          name: "torrentList",
+          meta: {
+            title: "种子列表",
+          },
+          component: () => import(/* webpackChunkName: "torrentList" */ "../views/torrent-list.vue"),
+        }
+      ]
+    },
+    // registerLikebocai
+    {
+      path: "/registerLikebocai",
+      name: "registerLikebocai",
+      meta: {
+        title: "likebocai | 注册",
+      },
+      component: () => import(/* webpackChunkName: "registerLikebocai" */ "../views/registerLikebocai.vue"),
+    },
 ];
 
 const router = createRouter({
-    history: createWebHashHistory(),
-    routes,
+  history: createWebHashHistory(),
+  routes,
 });
-
-router.beforeEach(async (to, from, next) => {
-    document.title = `${to.meta.title} | Rocket PT`;
-    const token = localStorage.getItem('token');
-    const basicStore = useBasicStore();
-    if (!token && (to.path !== '/login' && to.path !== '/register') && to.path !== '/forgotPassword' && to.path !== '/resetPassword') {
-        next('/login');
-    } /*else if (to.meta.permiss && !permiss.key.includes(to.meta.permiss)) {
-        // 如果没有权限，则进入403
-        next('/403');
-    }*/ else {
-        if (token) {
-          try {
-            await basicStore.fetchUserinfo();
-          } catch(error) {
-            localStorage.removeItem('token');
-            return;
-          }
-        }
-        next();
-    }
-});
+/*else if (to.meta.permiss && !permiss.key.includes(to.meta.permiss)) {
+       // 如果没有权限，则进入403
+       next('/403');
+   }*/
+// router.beforeEach(async (to, from, next) => {
+//     document.title = `${to.meta.title} | Rocket PT`;
+//     const token = localStorage.getItem('token');
+//     const basicStore = useBasicStore();
+//     if (!token && (to.path !== '/login' && to.path !== '/register') && to.path !== '/forgotPassword' && to.path !== '/resetPassword') {
+//         next('/login');
+//     } else {
+//         if (token) {
+//           try {
+//             await basicStore.fetchUserinfo();
+//           } catch(error) {
+//             localStorage.removeItem('token');
+//             return;
+//           }
+//         }
+//         next();
+//     }
+// });
 export default router;
